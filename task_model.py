@@ -2,7 +2,6 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import DateTime
 from db import db
-import logging
 
 
 class TaskModel(db.Model):

@@ -1,7 +1,5 @@
-import time
 from flask import Flask
 from db import db
-# from task_runner import task_runner
 import logging
 app = Flask(__name__)
 
