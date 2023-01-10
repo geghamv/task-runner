@@ -10,13 +10,10 @@ class TaskRunner:
     def __init__(self, name):
         self.name = name
 
-    def get(self):
-        return TaskModel.find_by_state("QUEUED")
+    def get_with_lock(self):
+        return TaskModel.find_by_state_with_update("QUEUED", "PENDING", self.name)
 
     def run(self, task, task_name):
-        task.state = "PENDING"
-        task.done_by = self.name
-        task.save_to_db()
         TaskRunner.print_time("started task {} ".format(task_name))
         _, duration_seconds = run_task(task_name)
         TaskRunner.print_time("finished task {} ".format(task_name))
@@ -32,7 +29,7 @@ class TaskRunner:
     def task_runner(cls, name):
         tsr = TaskRunner(name)
         while True:
-            task = tsr.get()
+            task = tsr.get_with_lock()
             if task is None:
                 break
             tsr.run(task, task.name)

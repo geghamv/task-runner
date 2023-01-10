@@ -29,5 +29,12 @@ class TaskModel(db.Model):
         db.session.commit()
 
     @classmethod
-    def find_by_state(cls, state):
-        return cls.query.filter_by(state=state).first()
+    def find_by_state_with_update(cls, state, new_state, tr_name):
+        task = cls.query.filter_by(state=state).order_by(
+            TaskModel.created_at).limit(1).with_for_update().first()
+        if task is None:
+            return None
+        task.state = new_state
+        task.done_by = tr_name
+        task.save_to_db()
+        return task
