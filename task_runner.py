@@ -17,13 +17,14 @@ class TaskRunner:
         TaskRunner.print_time("started task {} ".format(task_name))
         _, duration_seconds = run_task(task_name)
         TaskRunner.print_time("finished task {} ".format(task_name))
+        logging.info(f'duration seconds {duration_seconds}')
         task.state = "DONE"
         task.duration_seconds = duration_seconds
         task.save_to_db()
 
     @classmethod
     def print_time(cls, message):
-        logging.info(message + str(datetime.datetime.now()))
+        logging.info(message + str(datetime.datetime.utcnow()))
 
     @classmethod
     def task_runner(cls, name):

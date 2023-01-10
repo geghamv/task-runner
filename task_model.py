@@ -1,10 +1,8 @@
-import sys
-import time
-import random
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import DateTime
-from sqlalchemy.sql import func
 from db import db
+import logging
 
 
 class TaskModel(db.Model):
@@ -14,9 +12,9 @@ class TaskModel(db.Model):
     done_by = db.Column(db.String(80))
     duration_seconds = db.Column(db.Integer)
     created_at = db.Column(DateTime(timezone=True),
-                           server_default=func.now())
-    updated_at = db.Column(DateTime(timezone=True),
-                           server_default=func.now(), onupdate=func.now())
+                           default=datetime.datetime.utcnow)
+    updated_at = db.Column(DateTime(
+        timezone=True), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
     def __init__(self, state, name, done_by, duration_seconds=None):
         self.state = state
@@ -28,7 +26,7 @@ class TaskModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
+    @ classmethod
     def find_by_state_with_update(cls, state, new_state, tr_name):
         task = cls.query.filter_by(state=state).order_by(
             TaskModel.created_at).limit(1).with_for_update().first()
