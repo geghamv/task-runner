@@ -21,16 +21,15 @@ class TaskRunner:
          updates column values,
          logs times
         """
-        TaskRunner.print_time("started task", task.updated_at)
+        self.write_logs("started", task.name, task.updated_at)
         _, duration_seconds = run_task(task_name)
         task.state = "DONE"
         task.duration_seconds = duration_seconds
         task.save_to_db()
-        TaskRunner.print_time("finished task", task.updated_at)
+        self.write_logs("finished", task.name, task.updated_at)
 
-    @classmethod
-    def print_time(cls, message, time):
-        logging.info(" ".join([message, str(time)]))
+    def write_logs(self, message, task_name, time):
+        logging.info(" ".join([self.name, message, task_name, str(time)]))
 
     @classmethod
     def task_runner(cls, name):
