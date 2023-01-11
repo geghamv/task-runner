@@ -11,9 +11,16 @@ class TaskRunner:
         self.name = name
 
     def get_with_lock(self):
+        """ Picks first QUEUED task, locks the row,
+         updates state and other column values, unlocks the row
+        """
         return TaskModel.find_by_state_with_update("QUEUED", "PENDING", self.name)
 
     def run(self, task, task_name):
+        """ Runs the task,
+         updates column values,
+         logs times
+        """
         TaskRunner.print_time("started task", task.updated_at)
         _, duration_seconds = run_task(task_name)
         task.state = "DONE"
@@ -27,6 +34,9 @@ class TaskRunner:
 
     @classmethod
     def task_runner(cls, name):
+        """ Finds QUEUED tasks and processes them 
+        until no QUEUED tasks are left
+        """
         tsr = TaskRunner(name)
         while True:
             task = tsr.get_with_lock()

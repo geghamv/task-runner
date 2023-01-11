@@ -29,12 +29,17 @@ class TaskModel(db.Model):
 
     @ classmethod
     def find_by_state_with_update(cls, state, new_state, tr_name):
+        """ Picks first (by time of the creation) QUEUED task, locks the row,
+         updates state and other column values, unlocks the row
+        """
         task = cls.query.filter_by(state=state).order_by(
             TaskModel.created_at).limit(1).with_for_update().first()
         if task is None:
             return None
         task.state = new_state
         task.done_by = tr_name
+        # test to make sure that
+        # other task runners wait until row is unlocked
         # logging.info(f"{tr_name} picked task {task.name}")
         # time.sleep(15)
         task.save_to_db()
