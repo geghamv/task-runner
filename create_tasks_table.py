@@ -11,4 +11,3 @@ with app.app_context():
     db.create_all()
     for letter in letters:
         TaskModel("QUEUED", "task_" + letter,).save_to_db()
-    db.session.close()
