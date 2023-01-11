@@ -1,7 +1,9 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import DateTime
+from sqlalchemy.dialects.postgresql import TIMESTAMP
 from db import db
+# import time
+# import logging
 
 
 class TaskModel(db.Model):
@@ -10,12 +12,12 @@ class TaskModel(db.Model):
     name = db.Column(db.String(80), primary_key=True)
     done_by = db.Column(db.String(80))
     duration_seconds = db.Column(db.Integer)
-    created_at = db.Column(DateTime(timezone=True),
-                           default=datetime.datetime.utcnow)
-    updated_at = db.Column(DateTime(
-        timezone=True), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    created_at = db.Column(TIMESTAMP(timezone=False, precision=0),
+                           default=datetime.datetime.now)
+    updated_at = db.Column(TIMESTAMP(
+        timezone=False, precision=0), default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    def __init__(self, state, name, done_by, duration_seconds=None):
+    def __init__(self, state, name, done_by=None, duration_seconds=None):
         self.state = state
         self.name = name
         self.done_by = done_by
@@ -33,5 +35,7 @@ class TaskModel(db.Model):
             return None
         task.state = new_state
         task.done_by = tr_name
+        # logging.info(f"{tr_name} picked task {task.name}")
+        # time.sleep(15)
         task.save_to_db()
         return task
