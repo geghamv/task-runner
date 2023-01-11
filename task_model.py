@@ -13,9 +13,9 @@ class TaskModel(db.Model):
     done_by = db.Column(db.String(80))
     duration_seconds = db.Column(db.Integer)
     created_at = db.Column(TIMESTAMP(timezone=False, precision=0),
-                           default=datetime.datetime.now)
+                           default=datetime.datetime.utcnow)
     updated_at = db.Column(TIMESTAMP(
-        timezone=False, precision=0), default=datetime.datetime.now, onupdate=datetime.datetime.now)
+        timezone=False, precision=0), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
     def __init__(self, state, name, done_by=None, duration_seconds=None):
         self.state = state
