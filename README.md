@@ -26,8 +26,15 @@ To create a task runner <name> and process the tasks run
   ```
 Note if no name argument is specified the task runner's name will be "TR_1" by default. <br />
 
-To create multiple task runners just run the command above in multiple terminals and provide uniquie names for each task runner
-
+To create multiple task runners just run the command above in multiple terminals and provide uniquie names for each task runner. <br />
+To insert task manually in the `tasks` first run
+  ```sh
+  heroku pg:psql --app task-runner
+  ```
+Then run the following command with your desired values in the following format
+  ```sh
+   INSERT INTO tasks(state, name, done_by, duration_seconds, created_at, updated_at)  VALUES('QUEUED', 'task_Y',null ,null, 'December 12, 2022 2:02:13am','December 12, 2022 2:02:13am');
+  ```
 **_NOTE:_** All dates and times in database are in utc time zone.
 
 
