@@ -36,6 +36,6 @@ Then run the following command with your desired values in the following format
   ```sh
    INSERT INTO tasks(state, name, done_by, duration_seconds, created_at, updated_at)  VALUES('QUEUED', 'task_Y',null ,null, 'December 12, 2022 2:02:13am','December 12, 2022 2:02:13am');
   ```
-**_NOTE:_** All dates and times in database are in utc time zone.
+**_NOTE:_** All dates and times in the database are in utc time zone.
 
 
