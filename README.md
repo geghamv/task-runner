@@ -15,7 +15,7 @@ Flask, Flask-SQLALchemy, psycopg2
 Connect to Heroku app task-runner by invitation email. <br />
 Download Heroku Connect CLI.
 
-If you want to create new `tasks` table with 10 tasks run
+If you want to create a new `tasks` table with 10 tasks run
 
   ```sh
   heroku run python create_tasks.py --app task-runner
