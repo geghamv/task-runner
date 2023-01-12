@@ -4,7 +4,7 @@ Implemented task_runner that connects to the postgres DB and performs some tasks
 
 
 ## Description
-create_tasks.py creates `tasks` table in postgresql DB in Heroku and populates it with 10 tasks in the state of QUEUED <br />
+create_tasks.py creates `tasks` table in postgresql DB in Heroku and populates it with 10 tasks in the state of "QUEUED" <br />
 task_runner.py connects to the postgres DB and processes "QUEUED" tasks
 
 ## Dependencies
@@ -24,11 +24,10 @@ To create a task runner <name> and process the tasks run
   ```sh
   heroku run python task_runner.py --name <name>  --app task-runner
   ```
-Note if no name argument is specified the task runner's name will be TR_1 by default. <br />
+Note if no name argument is specified the task runner's name will be "TR_1" by default. <br />
 
 To create multiple task runners just run the command above in multiple terminals and provide uniquie names for each task runner
 
-## Note
-All dates and times in database are in utc time zone.
+**_NOTE:_** All dates and times in database are in utc time zone.
 
 
