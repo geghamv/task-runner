@@ -2,8 +2,8 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from db import db
-# import time
-# import logging
+import time
+import logging
 
 
 class TaskModel(db.Model):
@@ -33,13 +33,13 @@ class TaskModel(db.Model):
          updates state and other column values, unlocks the row
         """
         task = cls.query.filter_by(state=state).order_by(
-            TaskModel.created_at).limit(1).with_for_update().first()
+            TaskModel.created_at).limit(1).with_for_update(skip_locked=True).first()
         if task is None:
             return None
         task.state = new_state
         task.done_by = tr_name
         # test to make sure that
-        # other task runners wait until row is unlocked
+        # other task runners will skip the locked row
         # logging.info(f"{tr_name} picked task {task.name}")
         # time.sleep(15)
         task.save_to_db()
