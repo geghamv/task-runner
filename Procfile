@@ -1,1 +1,1 @@
-worker: python create_tasks_table.py
+worker: python create_tasks.py
