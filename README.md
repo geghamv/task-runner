@@ -27,6 +27,7 @@ To create a task runner <name> and process the tasks run
 Note if no name argument is specified the task runner's name will be "TR_1" by default. <br />
 
 To create multiple task runners just run the command above in multiple terminals and provide uniquie names for each task runner. <br />
+  
 To insert task manually in the `tasks` first run
   ```sh
   heroku pg:psql --app task-runner
