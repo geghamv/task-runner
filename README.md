@@ -1,33 +1,35 @@
 # task-runner
-create a postgresql DB, write task runner 
+Python script (task_runner) that connects to the postgres DB and performs some tasks. 
+
+
+
+## Description
+create_tasks.py creates `tasks` table in postgresql DB in heroku and populates it with 10 tasks in the state of QUEUED
+task_runner.py connects to the postgres DB and processes QUEUED tasks
+
+## Dependencies
+Flask, Flask-SQLALchemy, psycopg2
 
 <!-- GETTING STARTED -->
 ## Getting Started
+Connect to Heroku app task-runner by invitation email.
+Download Heroku Connect CLI
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+If you want to create new tasks table with 10 tasks run
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
   ```sh
-  npm install npm@latest -g
+  heroku run python create_tasks.py --app task-runner
   ```
+To create a task runner <name> and process the tasks run 
+  ```sh
+  heroku run python task_runner.py --name <name>  --app task-runner
+  ```
+Note if no name argument is specified the task runner's name will be TR_1 by default.
 
-### Installation
+To create multiple task runners just run the command above in multiple terminals
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+## Note
+All dates and times in database are in utc time zone
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+Author
+
